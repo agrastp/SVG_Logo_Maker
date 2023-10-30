@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
-const generateShape = require('./lib/shape');
+const Shape = require('./lib/shape');
+const generateSVG = require("./lib/generateSVG")
 const fs = require('fs');
 
 inquirer
@@ -31,38 +32,19 @@ inquirer
         }
     ])
 
-   
+
+
 
     .then((data) => {
         console.log(data)
-    const finalLogo = generateShape(data);
 
-    fs.writeFile('newLogo.svg', generateSVG(finalLogo), (err) =>
-        err ? console.log(err) : console.log('sucessfully created newLogo.svg')
-    );
-})
+        const shapeType = new Shape(data);
+        shapeType.generateShape(data); // when I console it is undefined
+
+        fs.writeFile('newLogo.svg', generateSVG(shapeType), (err) =>
+            err ? console.log(err) : console.log('sucessfully created newLogo.svg')
+        );
+    })
     .catch((err) => console.error(err));
 
 
-    generateSVG = (shape) => {
-        if (shape === "triangle") {
-            return
-            `<svg id="triangle" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300" viewBox="0 0 100 100">
-               ${shape.render()}
-                <text x="50" y="80" font-size="40" text-anchor="middle" fill=${shape.textColor}>${shape.logoName}</text>
-                 </svg>`
-        } else if (shape === "square") {
-            return
-            `<svg version="1.1" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
-                ${shape.render()}
-                 <text x="150" y="150" font-size="60" text-anchor="middle" fill=${shape.textColor}>${shape.logoName}</text></svg>`
-        } else (shape === "circle") 
-            return 
-            `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
-            ${shape.render()}
-            <text x="150" y="125" font-size="60" text-anchor="middle" fill=${shape.textColor}>${shape.logoName}</text>
-          </svg>`
-        }
-    
-    
-       
