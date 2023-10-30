@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const { generateShape } = require('./lib/shape.js');
+const generateShape = require('./lib/shape');
 const fs = require('fs');
 
 inquirer
@@ -30,7 +30,11 @@ inquirer
             name: 'textColor'
         }
     ])
+
+   
+
     .then((data) => {
+        console.log(data)
     const finalLogo = generateShape(data);
 
     fs.writeFile('newLogo.svg', generateSVG(finalLogo), (err) =>
@@ -61,4 +65,4 @@ inquirer
         }
     
     
-
+       
