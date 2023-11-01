@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
-const Shape = require('./lib/shape');
-const generateSVG = require("./lib/generateSVG")
+const generateSVG = require("./lib/generateSVG");
 const fs = require('fs');
+const userShape = require('./lib/generateShape');
 
 inquirer
     .prompt([
@@ -32,16 +32,12 @@ inquirer
         }
     ])
 
-
-
-
     .then((data) => {
-        console.log(data)
+        console.log(data);
+        console.log(userShape);
 
-        const shapeType = new Shape(data);
-        shapeType.generateShape(data); // when I console it is undefined
-
-        fs.writeFile('newLogo.svg', generateSVG(shapeType), (err) =>
+        userShape.generateShape(); // when I console it is undefined
+        fs.writeFile('newLogo.svg', generateSVG(userShape), (err) =>
             err ? console.log(err) : console.log('sucessfully created newLogo.svg')
         );
     })
