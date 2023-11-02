@@ -1,12 +1,14 @@
+//Import variables and access to inquire/fs library
+
 const inquirer = require('inquirer');
 const generateSVG = require("./lib/generateSVG");
 const fs = require('fs');
-// const userShape = require('./lib/generateShape');
 const Triangle = require("./lib/triangle");
 const Circle = require("./lib/circle");
 const Square = require("./lib/square");
 const Shape = require("./lib/shape");
 
+//Prompts the user in the terminal
 inquirer
     .prompt([
         {
@@ -41,6 +43,8 @@ inquirer
         }
     ])
 
+//Takes data and determines the shape that needs to be rendered.  Passes the data to generate the SVG in the example file.
+
     .then((data) => {
         console.log(data, "data");
         console.log(data.logoShape);
@@ -55,9 +59,9 @@ inquirer
             var userShape = new Square(data);
             console.log("creating square");
         }
-        // console.log(userShape);
+
         userShape.generateShape();
-        fs.writeFile(`./logos/${data.title}.svg`, generateSVG(userShape), (err) =>
+        fs.writeFile(`./examples/${data.title}.svg`, generateSVG(userShape), (err) =>
             err ? console.log(err) : console.log('sucessfully created newLogo.svg')
         );
     })
